@@ -24,8 +24,6 @@ class Authenticator
     created = auth.new?
     auth.store_omniauth_auth(omniauth)
     auth.raise_on_save_failure = true
-    auth.valid?
-    p auth.errors
     auth.save
     [created, auth]
   end
