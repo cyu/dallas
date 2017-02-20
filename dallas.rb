@@ -1,7 +1,6 @@
 require 'sinatra'
 require 'app'
-require 'rack/content_length'
-require 'jwt'
+require 'rack/content_length' require 'jwt'
 require 'oj'
 
 set :session_secret, ENV['SESSION_SECRET']
@@ -39,6 +38,10 @@ get '/token.json' do
       extra: auth.extra && Oj.load(auth.extra)
     }.delete_if { |_,v| v.nil? }.to_json
   end
+end
+
+get '/status' do
+  'OK'
 end
 
 def verify?
