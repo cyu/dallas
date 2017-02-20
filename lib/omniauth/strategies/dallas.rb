@@ -15,7 +15,7 @@ module OmniAuth
       def call!(env)
         request = Rack::Request.new(env)
         subdomain = calculate_subdomain(request)
-        return not_found if subdomain == ''
+        return @app.call(env) unless subdomain
         auth = Authenticator.first(subdomain: subdomain)
         return not_found unless auth
         env[AUTHENTICATOR] = auth
@@ -38,6 +38,9 @@ module OmniAuth
         @domain_regex ||= Regexp.compile("\\A(.*?)\\.#{Regexp.quote(options[:base_domain])}\\Z")
       end
 
+      def not_found
+        [404, {CONTENT_TYPE => TEXT_PLAIN}, ["Not Found"]]
+      end
     end
   end
 end
