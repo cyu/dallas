@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'app'
-require 'rack/content_length' require 'jwt'
+require 'rack/content_length'
+require 'jwt'
 require 'oj'
 
 set :session_secret, ENV['SESSION_SECRET']
@@ -10,7 +11,7 @@ use Rack::ContentLength
 use Rack::Logger
 
 use OmniAuth::Builder do
-  provider :dallas
+  provider :dallas, base_domain: ENV['BASE_DOMAIN']
 end
 
 CALLBACK_HANDLER = lambda do

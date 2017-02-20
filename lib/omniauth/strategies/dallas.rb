@@ -1,5 +1,4 @@
 require 'omniauth'
-require 'rack_subdomains'
 require 'oj'
 
 module OmniAuth
@@ -11,9 +10,11 @@ module OmniAuth
       CONTENT_TYPE = 'Content-Type'.freeze
       TEXT_PLAIN = 'text/plain'.freeze
 
+      option :base_domain
+
       def call!(env)
         request = Rack::Request.new(env)
-        subdomain = request.subdomains.join('.')
+        subdomain = calculate_subdomain(request)
         return not_found if subdomain == ''
         auth = Authenticator.first(subdomain: subdomain)
         return not_found unless auth
@@ -23,6 +24,18 @@ module OmniAuth
         args = opts.delete('_args')
         provider = middleware.new(@app, *args, opts.merge(callback_path: callback_path, request_path: request_path))
         provider.call!(env)
+      end
+
+      def calculate_subdomain(req)
+        if m = req.host.match(domain_regex)
+          m[1]
+        else
+          nil
+        end
+      end
+
+      def domain_regex
+        @domain_regex ||= Regexp.compile("\\A(.*?)\\.#{Regexp.quote(options[:base_domain])}\\Z")
       end
 
     end
