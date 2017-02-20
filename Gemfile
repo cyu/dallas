@@ -10,3 +10,5 @@ gem "dm-postgres-types"
 
 gem "dotenv"
 gem "jwt"
+
+gem "thin"
