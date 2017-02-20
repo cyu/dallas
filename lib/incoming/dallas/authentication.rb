@@ -4,6 +4,8 @@ require 'jwt'
 class Authentication
   include DataMapper::Resource
 
+  JWT_ALGORITHM = 'HS256'
+
   property :id, Serial
   property :uid, String, required: true, unique_index: :uniqueness, length: 1..255
   property :authenticator_id, Integer, required: true, unique_index: :uniqueness
@@ -45,7 +47,11 @@ class Authentication
       at_hash: token && Digest::MD5.hexdigest(token)
     }
     payload = payload.delete_if { |_,v| v.nil? }
-    JWT.encode payload, authenticator.client.client_secret, 'HS256'
+    JWT.encode payload, authenticator.client.client_secret, JWT_ALGORITHM
+  end
+
+  def verify_jwt_token(token)
+    !!JWT.decode(token, authenticator.client.client_secret, JWT_ALGORITHM)
   end
 
   def store_omniauth_auth(omniauth)
