@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/incominghq/omniauth-dropbox2.git
+  revision: dd3f4c34e94bc19950739c74e4456db839fbfcc3
+  specs:
+    omniauth-dropbox2 (1.0.4)
+      omniauth (~> 1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -84,8 +91,6 @@ GEM
     omniauth (1.6.1)
       hashie (>= 3.4.6, < 3.6.0)
       rack (>= 1.6.2, < 3)
-    omniauth-dropbox2 (1.0.4)
-      omniauth (~> 1.0)
     omniauth-oauth2 (1.4.0)
       oauth2 (~> 1.0)
       omniauth (~> 1.2)
@@ -114,7 +119,7 @@ DEPENDENCIES
   dm-postgres-types
   dotenv
   jwt
-  omniauth-dropbox2
+  omniauth-dropbox2!
   omniauth-oauth2
   sinatra
   thin
