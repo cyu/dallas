@@ -2,6 +2,7 @@
 source "https://rubygems.org"
 
 gem "sinatra"
+gem "omniauth-oauth2"
 gem "omniauth-dropbox2"
 
 gem "data_mapper"
