@@ -32,7 +32,7 @@ get '/auth/:provider/callback', &CALLBACK_HANDLER
 post '/auth/:provider/callback', &CALLBACK_HANDLER
 
 get '/auth/failure' do
-  params['invalid_credentials']
+  params['message']
 end
 
 get '/token.json' do
