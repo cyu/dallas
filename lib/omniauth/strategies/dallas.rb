@@ -30,7 +30,7 @@ module OmniAuth
         if m = req.host.match(domain_regex)
           m[1]
         else
-          nil
+          ENV['DEFAULT_SUBDOMAIN'] || nil
         end
       end
 
