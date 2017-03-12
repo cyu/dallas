@@ -1,6 +1,6 @@
 FROM ruby:alpine
 
-RUN apk update && apk add build-base postgresql-dev libffi-dev
+RUN apk update && apk add --no-cache build-base postgresql-dev libffi-dev git openssh
 
 RUN mkdir /app
 ADD Gemfile Gemfile.lock config.ru dallas.rb /app/
